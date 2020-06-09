@@ -1,8 +1,9 @@
-package com.meadetechnologies.mviarchitectureexample
+package com.meadetechnologies.mviarchitectureexample.ui.main
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import com.meadetechnologies.mviarchitectureexample.R
 
 class MainFragment : Fragment() {
 
