@@ -11,6 +11,7 @@ import com.meadetechnologies.mviarchitectureexample.ui.main.state.MainStateEvent
 import com.meadetechnologies.mviarchitectureexample.ui.main.state.MainStateEvent.*
 import com.meadetechnologies.mviarchitectureexample.ui.main.state.MainViewState
 import com.meadetechnologies.mviarchitectureexample.util.AbsentLiveData
+import com.meadetechnologies.mviarchitectureexample.util.DataState
 
 class MainViewModel: ViewModel() {
 
@@ -20,14 +21,15 @@ class MainViewModel: ViewModel() {
     val viewState: LiveData<MainViewState>
         get() = _viewState
 
-    val dataState: LiveData<MainViewState> = Transformations
+    val dataState: LiveData<DataState<MainViewState>> = Transformations
         .switchMap(_stateEvent){ stateEvent ->
             stateEvent?.let {
                 handleStateEvent(it)
             }
         }
 
-    fun handleStateEvent(stateEvent: MainStateEvent) : LiveData<MainViewState>{
+    fun handleStateEvent(stateEvent: MainStateEvent) : LiveData<DataState<MainViewState>>{
+        println("DEBUG: New StateEvent detected: $stateEvent")
         when(stateEvent){
             is GetBlogPostsEvent -> {
                 return Repository.getBlogPosts()
