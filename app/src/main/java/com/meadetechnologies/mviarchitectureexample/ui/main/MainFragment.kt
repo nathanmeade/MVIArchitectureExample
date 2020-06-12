@@ -8,13 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.meadetechnologies.mviarchitectureexample.R
 import com.meadetechnologies.mviarchitectureexample.model.BlogPost
+import com.meadetechnologies.mviarchitectureexample.model.User
 import com.meadetechnologies.mviarchitectureexample.ui.DataStateListener
 import com.meadetechnologies.mviarchitectureexample.ui.main.state.MainStateEvent.GetBlogPostsEvent
 import com.meadetechnologies.mviarchitectureexample.ui.main.state.MainStateEvent.GetUserEvent
 import com.meadetechnologies.mviarchitectureexample.util.TopSpacingItemDecoration
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.layout_blog_list_item.*
 import java.lang.ClassCastException
 
 class MainFragment : Fragment(),
@@ -86,8 +89,20 @@ class MainFragment : Fragment(),
 
             viewState.user?.let {
                 println("DEBUG: Setting user data: ${it}")
+                setUserProperties(it)
             }
         })
+    }
+
+    private fun setUserProperties(user: User){
+        email.text = user.email
+        username.text = user.username
+        view?.let {
+            Glide.with(it.context)
+                .load(user.image)
+                .into(image)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
